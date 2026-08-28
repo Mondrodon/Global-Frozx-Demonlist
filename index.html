@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>Global Frozx Demonlist</title>
+    <style>
+        /* ===== ГЛОБАЛЬНЫЕ СТИЛИ ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* ===== ШАПКА ===== */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2a2a3a;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b6b, #ffa94d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            font-size: 14px;
+            color: #8888aa;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .btn-submit {
+            background: #2a2a3a;
+            color: #ffffff;
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid #3a3a5a;
+            display: inline-block;
+        }
+
+        .btn-submit:hover {
+            background: #3a3a5a;
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+        }
+
+        /* ===== СПИСОК УРОВНЕЙ ===== */
+        .list-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #aaaacc;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .level-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .level-item {
+            background: #14141f;
+            padding: 16px 24px;
+            border-radius: 12px;
+            border-left: 4px solid #ff6b6b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .level-item:hover {
+            background: #1c1c2e;
+            transform: translateX(6px);
+        }
+
+        .level-position {
+            font-weight: 700;
+            font-size: 18px;
+            color: #ff6b6b;
+            min-width: 40px;
+        }
+
+        .level-name {
+            font-size: 17px;
+            font-weight: 500;
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .level-creator {
+            font-size: 14px;
+            color: #8888aa;
+        }
+
+        /* ===== ПОДВАЛ ===== */
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #1a1a2a;
+            text-align: center;
+            color: #555577;
+            font-size: 13px;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .logo h1 {
+                font-size: 26px;
+            }
+            .level-item {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .level-name {
+                width: 100%;
+                margin-left: 0;
+                padding-left: 44px;
+                margin-top: -6px;
+            }
+            .level-creator {
+                padding-left: 44px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ===== ШАПКА ===== -->
+        <header>
+            <div class="logo">
+                <h1>🔥 GFDL</h1>
+                <span>Global Frozx Demonlist • v1.0</span>
+            </div>
+            <!-- 👇 СЮДА ВСТАВЬ СВОЮ ССЫЛКУ (Telegram, Discord, Google Forms и т.д.) -->
+            <a href="https://t.me/GlobalFrozxBot" target="_blank" class="btn-submit">
+                📤 Submit Record
+            </a>
+        </header>
+
+        <!-- ===== СПИСОК УРОВНЕЙ ===== -->
+        <div class="list-title">📋 Список демонов</div>
+
+        <ul class="level-list">
+            <!--
+                👇 КАК ДОБАВЛЯТЬ НОВЫЙ УРОВЕНЬ:
+                Просто скопируй строчку ниже и вставь после предыдущей,
+                изменив номер, название и создателя.
+            -->
+            <li class="level-item">
+                <span class="level-position">#1</span>
+                <span class="level-name">Sakupen Circles (Unnerfed)</span>
+                <span class="level-creator">by Nick24</span>
+            </li>
+            <li class="level-item">
+                <span class="level-position">#2</span>
+                <span class="level-name">Ultra Paracosm</span>
+                <span class="level-creator">by ad3usgmd</span>
+            </li>
+            <li class="level-item">
+                <span class="level-position">#3</span>
+                <span class="level-name">Subsuming Vortex</span>
+                <span class="level-creator">by Echonox</span>
+            </li>
+            <li class="level-item">
+                <span class="level-position">#4</span>
+                <span class="level-name">Aquamarine</span>
+                <span class="level-creator">by TheRealDarnoc</span>
+            </li>
+            <li class="level-item">
+                <span class="level-position">#5</span>
+                <span class="level-name">Bace 04</span>
+                <span class="level-creator">by Bace</span>
+            </li>
+        </ul>
+
+        <!-- ===== ПОДВАЛ ===== -->
+        <footer>
+            Global Frozx Demonlist • Все права защищены • 2026
+        </footer>
+
+    </div>
+
+</body>
+</html>

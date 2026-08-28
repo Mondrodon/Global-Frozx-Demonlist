@@ -4,7 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1024" />
     <title>Global Frozx Demonlist</title>
+    
+    <!-- ИКОНКА САЙТА (favicon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>" />
+
     <style>
+        /* ===== ПЕРЕМЕННЫЕ ДЛЯ ТЕМ ===== */
+        :root {
+            --bg: #0a0a0f;
+            --bg-card: #14141f;
+            --bg-hover: #1c1c2e;
+            --border: #2a2a3a;
+            --text: #ffffff;
+            --text-secondary: #8888aa;
+            --accent: #ff6b6b;
+            --shadow: rgba(255, 107, 107, 0.2);
+        }
+
+        .light-theme {
+            --bg: #f0f0f5;
+            --bg-card: #ffffff;
+            --bg-hover: #e8e8f0;
+            --border: #d0d0dd;
+            --text: #1a1a2e;
+            --text-secondary: #666688;
+            --accent: #e05555;
+            --shadow: rgba(200, 50, 50, 0.15);
+        }
+
         /* ===== ГЛОБАЛЬНЫЕ СТИЛИ ===== */
         * {
             margin: 0;
@@ -14,16 +41,17 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: #0a0a0f;
-            color: #ffffff;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
+            transition: background 0.3s, color 0.3s;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
         }
 
@@ -32,54 +60,112 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #2a2a3a;
+            padding-bottom: 18px;
+            border-bottom: 2px solid var(--border);
             margin-bottom: 30px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
         }
 
         .logo h1 {
             font-size: 32px;
             font-weight: 700;
-            background: linear-gradient(135deg, #ff6b6b, #ffa94d);
+            background: linear-gradient(135deg, var(--accent), #ffa94d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
         .logo span {
-            font-size: 14px;
-            color: #8888aa;
+            font-size: 13px;
+            color: var(--text-secondary);
             display: block;
-            margin-top: 4px;
+            margin-top: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .btn-submit {
-            background: #2a2a3a;
-            color: #ffffff;
-            padding: 12px 28px;
+            background: var(--bg-card);
+            color: var(--text);
+            padding: 10px 24px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             transition: all 0.3s ease;
-            border: 1px solid #3a3a5a;
+            border: 1px solid var(--border);
             display: inline-block;
         }
 
         .btn-submit:hover {
-            background: #3a3a5a;
+            background: var(--accent);
+            color: #fff;
             transform: scale(1.03);
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
-            border-color: #ff6b6b;
+            border-color: var(--accent);
+        }
+
+        /* ===== КНОПКА ТЕМЫ ===== */
+        .theme-toggle {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+        }
+
+        /* ===== ТАБЫ ===== */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            color: var(--text);
+            background: var(--bg-card);
+        }
+
+        .tab.active {
+            color: var(--text);
+            background: var(--bg-card);
+            border-bottom: 3px solid var(--accent);
         }
 
         /* ===== СПИСОК УРОВНЕЙ ===== */
         .list-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            color: #aaaacc;
-            margin-bottom: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
             letter-spacing: 1px;
         }
 
@@ -87,14 +173,14 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .level-item {
-            background: #14141f;
-            padding: 16px 24px;
+            background: var(--bg-card);
+            padding: 14px 20px;
             border-radius: 12px;
-            border-left: 4px solid #ff6b6b;
+            border-left: 4px solid var(--accent);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -103,36 +189,97 @@
         }
 
         .level-item:hover {
-            background: #1c1c2e;
+            background: var(--bg-hover);
             transform: translateX(6px);
         }
 
         .level-position {
             font-weight: 700;
-            font-size: 18px;
-            color: #ff6b6b;
-            min-width: 40px;
+            font-size: 17px;
+            color: var(--accent);
+            min-width: 38px;
         }
 
         .level-name {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 500;
             flex: 1;
             margin-left: 10px;
         }
 
         .level-creator {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .level-points {
             font-size: 14px;
-            color: #8888aa;
+            font-weight: 700;
+            color: var(--accent);
+            margin-left: 12px;
+            background: var(--bg);
+            padding: 2px 12px;
+            border-radius: 20px;
+        }
+
+        /* ===== ЛИДЕРБОРД ===== */
+        .leaderboard-section {
+            display: none;
+        }
+
+        .leaderboard-section.active {
+            display: block;
+        }
+
+        .list-section {
+            display: block;
+        }
+
+        .list-section.hidden {
+            display: none;
+        }
+
+        .lb-item {
+            background: var(--bg-card);
+            padding: 12px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+            border-left: 4px solid #ffd93d;
+        }
+
+        .lb-item:hover {
+            background: var(--bg-hover);
+            transform: translateX(6px);
+        }
+
+        .lb-position {
+            font-weight: 700;
+            color: #ffd93d;
+            min-width: 38px;
+        }
+
+        .lb-name {
+            font-weight: 500;
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .lb-points {
+            font-weight: 700;
+            color: #ffd93d;
         }
 
         /* ===== ПОДВАЛ ===== */
         footer {
             margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #1a1a2a;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
             text-align: center;
-            color: #555577;
+            color: var(--text-secondary);
             font-size: 13px;
         }
 
@@ -147,17 +294,27 @@
             }
             .level-item {
                 flex-wrap: wrap;
-                gap: 6px;
+                gap: 4px;
             }
             .level-name {
                 width: 100%;
                 margin-left: 0;
                 padding-left: 44px;
-                margin-top: -6px;
+                margin-top: -4px;
             }
             .level-creator {
                 padding-left: 44px;
                 width: 100%;
+            }
+            .level-points {
+                margin-left: 44px;
+            }
+            .tabs {
+                gap: 4px;
+            }
+            .tab {
+                padding: 6px 14px;
+                font-size: 14px;
             }
         }
     </style>
@@ -170,49 +327,37 @@
         <header>
             <div class="logo">
                 <h1>🔥 GFDL</h1>
-                <span>Global Frozx Demonlist • v1.0</span>
+                <span>Global Frozx Demonlist • v2.0</span>
             </div>
-            <!-- 👇 СЮДА ВСТАВЬ СВОЮ ССЫЛКУ (Telegram, Discord, Google Forms и т.д.) -->
-            <a href="https://t.me/GlobalFrozxBot" target="_blank" class="btn-submit">
-                📤 Submit Record
-            </a>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">🌙</button>
+                <a href="https://t.me/GlobalFrozxBot" target="_blank" class="btn-submit">
+                    📤 Submit Record
+                </a>
+            </div>
         </header>
 
-        <!-- ===== СПИСОК УРОВНЕЙ ===== -->
-        <div class="list-title">📋 Список демонов</div>
+        <!-- ===== ТАБЫ ===== -->
+        <div class="tabs">
+            <button class="tab active" data-tab="list">📋 Список</button>
+            <button class="tab" data-tab="leaderboard">🏆 Лидерборд</button>
+        </div>
 
-        <ul class="level-list">
-            <!--
-                👇 КАК ДОБАВЛЯТЬ НОВЫЙ УРОВЕНЬ:
-                Просто скопируй строчку ниже и вставь после предыдущей,
-                изменив номер, название и создателя.
-            -->
-            <li class="level-item">
-                <span class="level-position">#1</span>
-                <span class="level-name">Sakupen Circles (Unnerfed)</span>
-                <span class="level-creator">by Nick24</span>
-            </li>
-            <li class="level-item">
-                <span class="level-position">#2</span>
-                <span class="level-name">Ultra Paracosm</span>
-                <span class="level-creator">by ad3usgmd</span>
-            </li>
-            <li class="level-item">
-                <span class="level-position">#3</span>
-                <span class="level-name">Subsuming Vortex</span>
-                <span class="level-creator">by Echonox</span>
-            </li>
-            <li class="level-item">
-                <span class="level-position">#4</span>
-                <span class="level-name">Aquamarine</span>
-                <span class="level-creator">by TheRealDarnoc</span>
-            </li>
-            <li class="level-item">
-                <span class="level-position">#5</span>
-                <span class="level-name">Bace 04</span>
-                <span class="level-creator">by Bace</span>
-            </li>
-        </ul>
+        <!-- ===== СПИСОК УРОВНЕЙ ===== -->
+        <div id="listSection" class="list-section">
+            <div class="list-title">📋 Список демонов</div>
+            <ul class="level-list" id="levelList">
+                <!-- Уровни добавляются через JS -->
+            </ul>
+        </div>
+
+        <!-- ===== ЛИДЕРБОРД ===== -->
+        <div id="leaderboardSection" class="leaderboard-section">
+            <div class="list-title">🏆 Топ игроков</div>
+            <div id="leaderboardList">
+                <!-- Лидерборд заполняется через JS -->
+            </div>
+        </div>
 
         <!-- ===== ПОДВАЛ ===== -->
         <footer>
@@ -220,6 +365,143 @@
         </footer>
 
     </div>
+
+    <script>
+        // ============================================
+        // 1. ДАННЫЕ УРОВНЕЙ (ДОБАВЛЯЙ СВОИ)
+        // ============================================
+        const levels = [
+            { name: "Sakupen Circles (Unnerfed)", creator: "Nick24", points: 150 },
+            { name: "Ultra Paracosm", creator: "ad3usgmd", points: 140 },
+            { name: "Subsuming Vortex", creator: "Echonox", points: 130 },
+            { name: "Aquamarine", creator: "TheRealDarnoc", points: 120 },
+            { name: "Bace 04", creator: "Bace", points: 110 },
+            { name: "Bace 05", creator: "Bace", points: 100 },
+            { name: "Bace 06", creator: "Bace", points: 90 },
+            { name: "Bace 07", creator: "Bace", points: 80 },
+            { name: "Bace 08", creator: "Bace", points: 70 },
+        ];
+
+        // ============================================
+        // 2. ДАННЫЕ ИГРОКОВ ДЛЯ ЛИДЕРБОРДА
+        // ============================================
+        const players = [
+            { name: "Frozx", points: 420 },
+            { name: "GGman228", points: 380 },
+            { name: "Nobody", points: 310 },
+            { name: "PlayerPro", points: 280 },
+            { name: "DemonSlayer", points: 250 },
+            { name: "SpeedRunner", points: 200 },
+        ];
+
+        // ============================================
+        // 3. ОТРИСОВКА СПИСКА УРОВНЕЙ
+        // ============================================
+        function renderLevels() {
+            const list = document.getElementById('levelList');
+            list.innerHTML = '';
+            levels.forEach((level, index) => {
+                const li = document.createElement('li');
+                li.className = 'level-item';
+                li.innerHTML = `
+                    <span class="level-position">#${index + 1}</span>
+                    <span class="level-name">${level.name}</span>
+                    <span class="level-creator">by ${level.creator}</span>
+                    <span class="level-points">${level.points}</span>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // ============================================
+        // 4. ОТРИСОВКА ЛИДЕРБОРДА
+        // ============================================
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            container.innerHTML = '';
+            // Сортируем по очкам (по убыванию)
+            const sorted = [...players].sort((a, b) => b.points - a.points);
+            sorted.forEach((player, index) => {
+                const div = document.createElement('div');
+                div.className = 'lb-item';
+                // Золото, серебро, бронза
+                let medal = '';
+                if (index === 0) medal = '🥇 ';
+                else if (index === 1) medal = '🥈 ';
+                else if (index === 2) medal = '🥉 ';
+                div.innerHTML = `
+                    <span class="lb-position">${medal}#${index + 1}</span>
+                    <span class="lb-name">${player.name}</span>
+                    <span class="lb-points">${player.points} очков</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // ============================================
+        // 5. ПЕРЕКЛЮЧЕНИЕ ТАБОВ
+        // ============================================
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const listSection = document.getElementById('listSection');
+            const lbSection = document.getElementById('leaderboardSection');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Убираем активный класс у всех табов
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // Показываем нужную секцию
+                    if (tab.dataset.tab === 'list') {
+                        listSection.classList.remove('hidden');
+                        listSection.style.display = 'block';
+                        lbSection.classList.remove('active');
+                        lbSection.style.display = 'none';
+                    } else {
+                        listSection.classList.add('hidden');
+                        listSection.style.display = 'none';
+                        lbSection.classList.add('active');
+                        lbSection.style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        // ============================================
+        // 6. ТЁМНАЯ / СВЕТЛАЯ ТЕМА
+        // ============================================
+        function setupTheme() {
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+
+            // Проверяем сохранённую тему
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                body.classList.add('light-theme');
+                toggle.textContent = '☀️';
+            }
+
+            toggle.addEventListener('click', () => {
+                body.classList.toggle('light-theme');
+                const isLight = body.classList.contains('light-theme');
+                toggle.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            });
+        }
+
+        // ============================================
+        // 7. ЗАПУСК
+        // ============================================
+        renderLevels();
+        renderLeaderboard();
+        setupTabs();
+        setupTheme();
+
+        // По умолчанию показываем список
+        document.getElementById('listSection').style.display = 'block';
+        document.getElementById('leaderboardSection').style.display = 'none';
+    </script>
 
 </body>
 </html>

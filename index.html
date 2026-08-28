@@ -14,17 +14,20 @@
             --bg: #0a0a0f;
             --bg-card: #14141f;
             --bg-hover: #1c1c2e;
+            --bg-modal: #1a1a2e;
             --border: #2a2a3a;
             --text: #ffffff;
             --text-secondary: #8888aa;
             --accent: #ff6b6b;
             --shadow: rgba(255, 107, 107, 0.2);
+            --gold: #ffd93d;
         }
 
         .light-theme {
             --bg: #f0f0f5;
             --bg-card: #ffffff;
             --bg-hover: #e8e8f0;
+            --bg-modal: #f8f8ff;
             --border: #d0d0dd;
             --text: #1a1a2e;
             --text-secondary: #666688;
@@ -110,7 +113,6 @@
             border-color: var(--accent);
         }
 
-        /* ===== КНОПКА ТЕМЫ ===== */
         .theme-toggle {
             background: var(--bg-card);
             color: var(--text);
@@ -185,7 +187,7 @@
             justify-content: space-between;
             align-items: center;
             transition: all 0.2s ease;
-            cursor: default;
+            cursor: pointer;
         }
 
         .level-item:hover {
@@ -222,6 +224,128 @@
             border-radius: 20px;
         }
 
+        /* ===== МОДАЛЬНОЕ ОКНО ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-modal);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            padding: 30px 35px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFade 0.3s ease;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+        }
+
+        .modal h2 {
+            font-size: 26px;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .modal .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .modal .field {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal .field:last-of-type {
+            border-bottom: none;
+        }
+
+        .modal .field-label {
+            font-weight: 600;
+            min-width: 110px;
+            color: var(--text-secondary);
+        }
+
+        .modal .field-value {
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        .modal .field-value a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .modal .field-value a:hover {
+            text-decoration: underline;
+        }
+
+        .modal .victors-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+            margin-top: 4px;
+        }
+
+        .modal .victor-tag {
+            background: var(--bg);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .modal .video-container {
+            margin: 12px 0 6px;
+        }
+
+        .modal .video-container iframe {
+            width: 100%;
+            height: 280px;
+            border-radius: 12px;
+            border: none;
+        }
+
         /* ===== ЛИДЕРБОРД ===== */
         .leaderboard-section {
             display: none;
@@ -248,7 +372,7 @@
             align-items: center;
             margin-bottom: 8px;
             transition: all 0.2s ease;
-            border-left: 4px solid #ffd93d;
+            border-left: 4px solid var(--gold);
         }
 
         .lb-item:hover {
@@ -258,7 +382,7 @@
 
         .lb-position {
             font-weight: 700;
-            color: #ffd93d;
+            color: var(--gold);
             min-width: 38px;
         }
 
@@ -270,7 +394,7 @@
 
         .lb-points {
             font-weight: 700;
-            color: #ffd93d;
+            color: var(--gold);
         }
 
         /* ===== ПОДВАЛ ===== */
@@ -289,13 +413,8 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-            .logo h1 {
-                font-size: 26px;
-            }
-            .level-item {
-                flex-wrap: wrap;
-                gap: 4px;
-            }
+            .logo h1 { font-size: 26px; }
+            .level-item { flex-wrap: wrap; gap: 4px; }
             .level-name {
                 width: 100%;
                 margin-left: 0;
@@ -306,16 +425,11 @@
                 padding-left: 44px;
                 width: 100%;
             }
-            .level-points {
-                margin-left: 44px;
-            }
-            .tabs {
-                gap: 4px;
-            }
-            .tab {
-                padding: 6px 14px;
-                font-size: 14px;
-            }
+            .level-points { margin-left: 44px; }
+            .modal { padding: 20px; }
+            .modal .field { flex-direction: column; gap: 4px; }
+            .modal .field-label { min-width: auto; }
+            .modal .video-container iframe { height: 180px; }
         }
     </style>
 </head>
@@ -327,7 +441,7 @@
         <header>
             <div class="logo">
                 <h1>🔥 GFDL</h1>
-                <span>Global Frozx Demonlist • v2.0</span>
+                <span>Global Frozx Demonlist • v3.0</span>
             </div>
             <div class="header-actions">
                 <button class="theme-toggle" id="themeToggle" title="Сменить тему">🌙</button>
@@ -359,6 +473,44 @@
             </div>
         </div>
 
+        <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h2 id="modalTitle">Название уровня</h2>
+                <span class="subtitle" id="modalPosition">#1</span>
+
+                <div class="field">
+                    <span class="field-label">Creators</span>
+                    <span class="field-value" id="modalCreators">—</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Verifier</span>
+                    <span class="field-value" id="modalVerifier">—</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Publisher</span>
+                    <span class="field-value" id="modalPublisher">—</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">ID</span>
+                    <span class="field-value" id="modalId">—</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Points</span>
+                    <span class="field-value" id="modalPoints">—</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Victors</span>
+                    <span class="field-value" id="modalVictors">—</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Video</span>
+                    <span class="field-value" id="modalVideo">—</span>
+                </div>
+            </div>
+        </div>
+
         <!-- ===== ПОДВАЛ ===== -->
         <footer>
             Global Frozx Demonlist • Все права защищены • 2026
@@ -371,15 +523,96 @@
         // 1. ДАННЫЕ УРОВНЕЙ (ДОБАВЛЯЙ СВОИ)
         // ============================================
         const levels = [
-            { name: "Sakupen Circles (Unnerfed)", creator: "Nick24", points: 150 },
-            { name: "Ultra Paracosm", creator: "ad3usgmd", points: 140 },
-            { name: "Subsuming Vortex", creator: "Echonox", points: 130 },
-            { name: "Aquamarine", creator: "TheRealDarnoc", points: 120 },
-            { name: "Bace 04", creator: "Bace", points: 110 },
-            { name: "Bace 05", creator: "Bace", points: 100 },
-            { name: "Bace 06", creator: "Bace", points: 90 },
-            { name: "Bace 07", creator: "Bace", points: 80 },
-            { name: "Bace 08", creator: "Bace", points: 70 },
+            {
+                name: "Sakupen Circles (Unnerfed)",
+                creators: ["Nick24", "Riot"],
+                verifier: "ad3usgmd",
+                publisher: "Nick24",
+                id: 12345,
+                points: 150,
+                victors: ["Frozx", "GGman228", "Nobody"],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Ultra Paracosm",
+                creators: ["TheRealDarnoc"],
+                verifier: "Echonox",
+                publisher: "Echonox",
+                id: 12346,
+                points: 140,
+                victors: ["Frozx", "PlayerPro"],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Subsuming Vortex",
+                creators: ["Echonox"],
+                verifier: "TheRealDarnoc",
+                publisher: "Echonox",
+                id: 12347,
+                points: 130,
+                victors: ["GGman228"],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Aquamarine",
+                creators: ["TheRealDarnoc"],
+                verifier: "Nick24",
+                publisher: "TheRealDarnoc",
+                id: 12348,
+                points: 120,
+                victors: ["Frozx", "DemonSlayer"],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Bace 04",
+                creators: ["Bace"],
+                verifier: "Bace",
+                publisher: "Bace",
+                id: 12349,
+                points: 110,
+                victors: ["SpeedRunner"],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Bace 05",
+                creators: ["Bace"],
+                verifier: "Bace",
+                publisher: "Bace",
+                id: 12350,
+                points: 100,
+                victors: [],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Bace 06",
+                creators: ["Bace"],
+                verifier: "Bace",
+                publisher: "Bace",
+                id: 12351,
+                points: 90,
+                victors: [],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Bace 07",
+                creators: ["Bace"],
+                verifier: "Bace",
+                publisher: "Bace",
+                id: 12352,
+                points: 80,
+                victors: [],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Bace 08",
+                creators: ["Bace"],
+                verifier: "Bace",
+                publisher: "Bace",
+                id: 12353,
+                points: 70,
+                victors: [],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            }
         ];
 
         // ============================================
@@ -406,25 +639,76 @@
                 li.innerHTML = `
                     <span class="level-position">#${index + 1}</span>
                     <span class="level-name">${level.name}</span>
-                    <span class="level-creator">by ${level.creator}</span>
+                    <span class="level-creator">by ${level.creators.join(', ')}</span>
                     <span class="level-points">${level.points}</span>
                 `;
+                li.addEventListener('click', () => openModal(index));
                 list.appendChild(li);
             });
         }
 
         // ============================================
-        // 4. ОТРИСОВКА ЛИДЕРБОРДА
+        // 4. МОДАЛЬНОЕ ОКНО
+        // ============================================
+        function openModal(index) {
+            const level = levels[index];
+            const overlay = document.getElementById('modalOverlay');
+
+            document.getElementById('modalTitle').textContent = level.name;
+            document.getElementById('modalPosition').textContent = `#${index + 1}`;
+            document.getElementById('modalCreators').textContent = level.creators.join(', ') || '—';
+            document.getElementById('modalVerifier').textContent = level.verifier || '—';
+            document.getElementById('modalPublisher').textContent = level.publisher || '—';
+            document.getElementById('modalId').textContent = level.id || '—';
+            document.getElementById('modalPoints').textContent = level.points || '—';
+
+            // Victors
+            const victorsEl = document.getElementById('modalVictors');
+            if (level.victors && level.victors.length > 0) {
+                victorsEl.innerHTML = level.victors.map(v => `<span class="victor-tag">${v}</span>`).join(' ');
+            } else {
+                victorsEl.textContent = '—';
+            }
+
+            // Video
+            const videoEl = document.getElementById('modalVideo');
+            if (level.video) {
+                videoEl.innerHTML = `<div class="video-container"><iframe src="${level.video}" allowfullscreen></iframe></div>`;
+            } else {
+                videoEl.textContent = '—';
+            }
+
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Закрытие по клику на фон
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+
+        // Закрытие по ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ============================================
+        // 5. ОТРИСОВКА ЛИДЕРБОРДА
         // ============================================
         function renderLeaderboard() {
             const container = document.getElementById('leaderboardList');
             container.innerHTML = '';
-            // Сортируем по очкам (по убыванию)
             const sorted = [...players].sort((a, b) => b.points - a.points);
             sorted.forEach((player, index) => {
                 const div = document.createElement('div');
                 div.className = 'lb-item';
-                // Золото, серебро, бронза
                 let medal = '';
                 if (index === 0) medal = '🥇 ';
                 else if (index === 1) medal = '🥈 ';
@@ -439,7 +723,7 @@
         }
 
         // ============================================
-        // 5. ПЕРЕКЛЮЧЕНИЕ ТАБОВ
+        // 6. ПЕРЕКЛЮЧЕНИЕ ТАБОВ
         // ============================================
         function setupTabs() {
             const tabs = document.querySelectorAll('.tab');
@@ -448,40 +732,33 @@
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Убираем активный класс у всех табов
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
 
-                    // Показываем нужную секцию
                     if (tab.dataset.tab === 'list') {
-                        listSection.classList.remove('hidden');
                         listSection.style.display = 'block';
-                        lbSection.classList.remove('active');
                         lbSection.style.display = 'none';
+                        lbSection.classList.remove('active');
                     } else {
-                        listSection.classList.add('hidden');
                         listSection.style.display = 'none';
-                        lbSection.classList.add('active');
                         lbSection.style.display = 'block';
+                        lbSection.classList.add('active');
                     }
                 });
             });
         }
 
         // ============================================
-        // 6. ТЁМНАЯ / СВЕТЛАЯ ТЕМА
+        // 7. ТЁМНАЯ / СВЕТЛАЯ ТЕМА
         // ============================================
         function setupTheme() {
             const toggle = document.getElementById('themeToggle');
             const body = document.body;
-
-            // Проверяем сохранённую тему
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
                 body.classList.add('light-theme');
                 toggle.textContent = '☀️';
             }
-
             toggle.addEventListener('click', () => {
                 body.classList.toggle('light-theme');
                 const isLight = body.classList.contains('light-theme');
@@ -491,14 +768,13 @@
         }
 
         // ============================================
-        // 7. ЗАПУСК
+        // 8. ЗАПУСК
         // ============================================
         renderLevels();
         renderLeaderboard();
         setupTabs();
         setupTheme();
 
-        // По умолчанию показываем список
         document.getElementById('listSection').style.display = 'block';
         document.getElementById('leaderboardSection').style.display = 'none';
     </script>

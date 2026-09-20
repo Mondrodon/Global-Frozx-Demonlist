@@ -19,6 +19,7 @@
             --text-secondary: #8888aa;
             --accent: #ff6b6b;
             --accent-challenge: #6b9fff;
+            --accent-future: #b06bff;
             --gold: #ffd93d;
             --shadow: rgba(255, 107, 107, 0.2);
         }
@@ -33,6 +34,7 @@
             --text-secondary: #666688;
             --accent: #e05555;
             --accent-challenge: #4a7fd4;
+            --accent-future: #8a4fd4;
             --gold: #d4a017;
             --shadow: rgba(200, 50, 50, 0.15);
         }
@@ -169,6 +171,10 @@
             border-bottom-color: var(--accent-challenge);
         }
 
+        .tab.future-tab.active {
+            border-bottom-color: var(--accent-future);
+        }
+
         /* ===== СЕКЦИИ ===== */
         .section {
             display: none;
@@ -210,6 +216,10 @@
             border-left-color: var(--accent-challenge);
         }
 
+        .level-item.future {
+            border-left-color: var(--accent-future);
+        }
+
         .level-item:hover {
             background: var(--bg-hover);
             transform: translateX(6px);
@@ -224,6 +234,10 @@
 
         .level-item.challenge .level-position {
             color: var(--accent-challenge);
+        }
+
+        .level-item.future .level-position {
+            color: var(--accent-future);
         }
 
         .level-name {
@@ -250,6 +264,10 @@
 
         .level-item.challenge .level-points {
             color: var(--accent-challenge);
+        }
+
+        .level-item.future .level-points {
+            color: var(--accent-future);
         }
 
         /* ===== ЛИДЕРБОРД ===== */
@@ -467,7 +485,7 @@
         <header>
             <div class="logo">
                 <h1>🔥 GFDL</h1>
-                <span>Global Frozx Demonlist • v4.0</span>
+                <span>Global Frozx Demonlist • v5.0</span>
             </div>
             <div class="header-actions">
                 <button class="theme-toggle" id="themeToggle" title="Сменить тему">🌙</button>
@@ -483,6 +501,7 @@
             <button class="tab" data-tab="demonlb">🏆 Demon Leaderboard</button>
             <button class="tab challenge-tab" data-tab="challengelist">⚡ Challenge List</button>
             <button class="tab challenge-tab" data-tab="challengelb">🏅 Challenge Leaderboard</button>
+            <button class="tab future-tab" data-tab="futurelist">🔮 Future</button>
         </div>
 
         <!-- ===== DEMON LIST ===== -->
@@ -507,6 +526,12 @@
         <div id="challengelbSection" class="section">
             <div class="list-title">🏅 Топ игроков (испытания)</div>
             <div id="challengeLeaderboardList"></div>
+        </div>
+
+        <!-- ===== FUTURE LIST ===== -->
+        <div id="futurelistSection" class="section">
+            <div class="list-title">🔮 Будущие уровни (в разработке)</div>
+            <ul class="level-list" id="futureLevelList"></ul>
         </div>
 
         <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
@@ -637,7 +662,33 @@
         ];
 
         // ============================================
-        // 3. ЛИДЕРБОРД ДЕМОНОВ
+        // 3. БУДУЩИЕ УРОВНИ (FUTURE)
+        // ============================================
+        const futureLevels = [
+            {
+                name: "Silent Circles",
+                creators: ["Frozx", "GGman228"],
+                verifier: "В разработке",
+                publisher: "Frozx",
+                id: 0,
+                points: 200,
+                victors: [],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                name: "Bloodbath (Unnerfed)",
+                creators: ["Riot"],
+                verifier: "Ожидает верификации",
+                publisher: "Riot",
+                id: 0,
+                points: 180,
+                victors: [],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            }
+        ];
+
+        // ============================================
+        // 4. ЛИДЕРБОРД ДЕМОНОВ
         // ============================================
         const demonPlayers = [
             { name: "Frozx", points: 420 },
@@ -649,28 +700,31 @@
         ];
 
         // ============================================
-        // 4. ЛИДЕРБОРД ИСПЫТАНИЙ
+        // 5. ЛИДЕРБОРД ИСПЫТАНИЙ
         // ============================================
         const challengePlayers = [
             { name: "kumu", points: 100 }
         ];
 
         // ============================================
-        // 5. ОТРИСОВКА СПИСКОВ
+        // 6. ОТРИСОВКА СПИСКОВ
         // ============================================
-        function renderLevelList(containerId, levels, isChallenge) {
+        function renderLevelList(containerId, levels, type) {
             const list = document.getElementById(containerId);
             list.innerHTML = '';
             levels.forEach((level, index) => {
                 const li = document.createElement('li');
-                li.className = 'level-item' + (isChallenge ? ' challenge' : '');
+                let className = 'level-item';
+                if (type === 'challenge') className += ' challenge';
+                if (type === 'future') className += ' future';
+                li.className = className;
                 li.innerHTML = `
                     <span class="level-position">#${index + 1}</span>
                     <span class="level-name">${level.name}</span>
                     <span class="level-creator">by ${level.creators.join(', ')}</span>
                     <span class="level-points">${level.points}</span>
                 `;
-                li.addEventListener('click', () => openModal(level, index, isChallenge));
+                li.addEventListener('click', () => openModal(level, index, type));
                 list.appendChild(li);
             });
         }
@@ -696,13 +750,17 @@
         }
 
         // ============================================
-        // 6. МОДАЛЬНОЕ ОКНО
+        // 7. МОДАЛЬНОЕ ОКНО
         // ============================================
-        function openModal(level, index, isChallenge) {
+        function openModal(level, index, type) {
             const overlay = document.getElementById('modalOverlay');
 
+            let typeLabel = '';
+            if (type === 'challenge') typeLabel = ' ⚡ Challenge';
+            if (type === 'future') typeLabel = ' 🔮 Future';
+
             document.getElementById('modalTitle').textContent = level.name;
-            document.getElementById('modalPosition').textContent = `#${index + 1}` + (isChallenge ? ' ⚡ Challenge' : '');
+            document.getElementById('modalPosition').textContent = `#${index + 1}` + typeLabel;
             document.getElementById('modalCreators').textContent = level.creators.join(', ') || '—';
             document.getElementById('modalVerifier').textContent = level.verifier || '—';
             document.getElementById('modalPublisher').textContent = level.publisher || '—';
@@ -741,7 +799,7 @@
         });
 
         // ============================================
-        // 7. ПЕРЕКЛЮЧЕНИЕ ТАБОВ
+        // 8. ПЕРЕКЛЮЧЕНИЕ ТАБОВ
         // ============================================
         function setupTabs() {
             const tabs = document.querySelectorAll('.tab');
@@ -749,7 +807,8 @@
                 demonlist: document.getElementById('demonlistSection'),
                 demonlb: document.getElementById('demonlbSection'),
                 challengelist: document.getElementById('challengelistSection'),
-                challengelb: document.getElementById('challengelbSection')
+                challengelb: document.getElementById('challengelbSection'),
+                futurelist: document.getElementById('futurelistSection')
             };
 
             tabs.forEach(tab => {
@@ -764,7 +823,7 @@
         }
 
         // ============================================
-        // 8. ТЕМА
+        // 9. ТЕМА
         // ============================================
         function setupTheme() {
             const toggle = document.getElementById('themeToggle');
@@ -783,10 +842,11 @@
         }
 
         // ============================================
-        // 9. ЗАПУСК
+        // 10. ЗАПУСК
         // ============================================
-        renderLevelList('demonLevelList', demonLevels, false);
-        renderLevelList('challengeLevelList', challengeLevels, true);
+        renderLevelList('demonLevelList', demonLevels, 'demon');
+        renderLevelList('challengeLevelList', challengeLevels, 'challenge');
+        renderLevelList('futureLevelList', futureLevels, 'future');
         renderLeaderboard('demonLeaderboardList', demonPlayers, false);
         renderLeaderboard('challengeLeaderboardList', challengePlayers, true);
         setupTabs();
